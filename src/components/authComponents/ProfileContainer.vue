@@ -1,4 +1,4 @@
-<template v-if="isLoading">
+<template>
     <div class="flex flex-col items-center pt-8" v-if="$store.state.user">
       <div class="relative mb-6">
         <img class="object-cover rounded-full shadow-lg" src="https://via.placeholder.com/150" alt="Foto de perfil">

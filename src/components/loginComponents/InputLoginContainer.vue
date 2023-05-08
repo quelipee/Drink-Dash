@@ -1,5 +1,4 @@
 <template>
-
   <div>
     <form @submit.prevent="login" method="post">
       <ion-card>
@@ -27,9 +26,10 @@
 <script>
 import {IonButton, IonCard, IonCardContent, IonCardHeader, IonInput, IonTitle, loadingController} from "@ionic/vue";
 import InputContainer from "@/components/RegisterComponents/InputContainer.vue";
-import postAPILogin from "../../../services/postAPILogin.js";
-import {ref} from "vue";
 import {useRouter} from "vue-router";
+import postAPILogin from "../../../services/postAPILogin";
+import { ref } from "vue";
+import axios from "axios";
 export default {
   name: "InputLoginContainer.vue",
   components:{
@@ -59,16 +59,20 @@ export default {
       errorLogin.value = null
     }
 
-    const login = () =>{
-      postAPILogin(user.value.email, user.value.password).then(() =>{
+    const getToken = async () =>{
+      await axios.get('http://192.168.1.114:8000/sanctum/csrf-cookie');
+    }
+
+    const login = async () =>{
+      await getToken();
+      await postAPILogin(user.value.email,user.value.password).then(() =>{
         showLoading();
-        user.value = '';
-        router.push({name:'tab1'})
-      }).catch(error => {
-        errorLogin.value = error.response.data.message
+        router.push({name: 'tab1'});
+      }).catch(error =>{
+        errorLogin.value = error.response.data.message;
         setTimeout(() =>{
           clearError();
-        },5000);
+        },5000)
         console.log(error)
       })
     }

@@ -1,5 +1,5 @@
 <template>
-  <form action="">
+<!--  <form action="">-->
     <ion-card>
       <ion-card-title>
         <h2 class="text-center font-semibold text-3xl">{{variant.name}}</h2>
@@ -36,15 +36,16 @@
       </div>
     </ion-card>
 
-  </form>
+<!--  </form>-->
 </template>
 
 <script>
-import {IonInput, IonCard, IonCardTitle, IonCardSubtitle, IonButton, IonIcon} from "@ionic/vue";
-import {computed, onMounted, ref, toRef} from "vue";
+import {IonInput, IonCard, IonCardTitle, IonCardSubtitle, IonButton} from "@ionic/vue";
+import {computed, onMounted, ref} from "vue";
 import postAPI from "../../../../services/postAPI.js";
 import {useRoute, useRouter} from "vue-router";
 import {useStore} from "vuex";
+import axios from "axios";
 
 
 export default {
@@ -86,6 +87,10 @@ export default {
     const clearError = () =>{
       errorOrder.value = null
     }
+
+    const getToken = async () =>{
+      await axios.get('http://192.168.1.114:8000/sanctum/csrf-cookie');
+    }
     const comprar = (data) =>{
 
       const payload = {
@@ -93,7 +98,10 @@ export default {
       };
 
       postAPI(`order_product/${route.params.id}`, payload).then(() =>{
+        getToken();
         store.dispatch('updateStock');
+        store.dispatch('updateCompras');
+        store.dispatch('updateBalance');
         router.replace({
           name: "tab3",
         })

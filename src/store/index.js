@@ -4,10 +4,9 @@ import getAPI from "../../services/getAPI";
 export default createStore({
   state: {
     user:{
-      balance:{},
+      balance:{}
     },
-    products:{
-    },
+    products:{},
     compras:{},
   },
   getters: {
@@ -33,6 +32,7 @@ export default createStore({
   actions: {
     updateBalance({ commit }){
       getAPI('get-user').then(response =>{
+        console.log(response.data);
         commit('get_user',response.data)
       }).catch(error =>{
         console.log(error)
@@ -41,7 +41,7 @@ export default createStore({
 
     updateCompras({ commit }){
       getAPI('get-list-order').then(response =>{
-        commit('comprasUpdate',response)
+        commit('comprasUpdate',response.data)
       }).catch(error =>{
         console.log(error)
       })

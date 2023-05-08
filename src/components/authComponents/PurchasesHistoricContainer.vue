@@ -13,7 +13,7 @@
           <p class="font-semibold text-gray-500">Histórico</p>
           <div class="space-y-12">
             <ion-card class="m-0 space-y-3 p-2"
-                      v-for="order in getfilteredOrders()" :key="order.id">
+                      v-for="order in getfilteredOrders(undefined, undefined)" :key="order.id">
               <p>{{formatDate(order.date_order)}}</p>
               <div class="flex items-center space-x-2">
                 <ion-icon :icon="beer"/>
@@ -35,7 +35,7 @@
       </div>
 </template>
 
-<script>
+<script lang="js">
 import {defineComponent, onMounted, ref} from "vue";
 import {IonCardContent, IonIcon} from "@ionic/vue";
 import { checkmarkCircle,beer } from 'ionicons/icons';

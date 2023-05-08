@@ -38,7 +38,7 @@
   </div>
 </template>
 
-<script>
+<script lang="js">
 
 import { alertController,IonChip,IonIcon,loadingController} from "@ionic/vue";
 import { IonButton,IonCard,IonCardContent } from "@ionic/vue";
@@ -90,13 +90,14 @@ export default {
       await alert.present();
     };
 
-    const comprasfilter = () =>{
-      if (store.state.compras){
+    const comprasfilter = () => {
+      if (Array.isArray(store.state.compras)) {
         const cart = store.state.compras.filter(compra => compra.status_order !== 'Concluído');
         return cart ? cart.reverse() : [];
       }
-      return store.state.compras
+      return store.state.compras;
     }
+
 
     const showLoading = async () =>{
       const loading = await loadingController.create({
@@ -109,6 +110,7 @@ export default {
 
     // buy_product/{id} router payment
     const payment = (compra) => {
+      console.log(compra)
       postAPI(`buy_product/${compra.products.order_id}`).then(() =>{
         store.dispatch('updateBalance')
         store.dispatch('updateCompras')
@@ -121,6 +123,7 @@ export default {
     }
 
     const cancel = (compra) =>{
+      console.log(compra)
       postAPI(`order_product_cancel/${compra.products.order_id}`).then(() =>{
         store.dispatch('updateStock')
         showLoading();
