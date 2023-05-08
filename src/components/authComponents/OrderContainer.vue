@@ -112,8 +112,8 @@ export default {
     const payment = (compra) => {
       console.log(compra)
       postAPI(`buy_product/${compra.products.order_id}`).then(() =>{
-        store.dispatch('updateBalance')
         store.dispatch('updateCompras')
+        store.dispatch('updateBalance')
         showLoading();
         router.replace({name:'tab4'})
       }).catch(error =>{
