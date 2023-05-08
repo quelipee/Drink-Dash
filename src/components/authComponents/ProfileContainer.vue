@@ -23,42 +23,71 @@
           </ion-card-header>
         </ion-card>
 
-        <ion-card class="mb-1 bg-gray-200">
+        <ion-card>
 
-          <ion-card-header class="block bg-gray-2500 text-gray-700 font-bold" for="endereco">
-            Endereço de entrega:
+          <ion-card-header class="block font-bold" for="endereco">
+            <p class="text-gray-600">Endereço de entrega:</p>
             <ion-card-subtitle>
-              <ion-input v-model="user.address_delivery"
-                         :value="$store.state.user.address_delivery"/>
+              <p>{{ $store.state.user.address_delivery }}</p>
             </ion-card-subtitle>
           </ion-card-header>
 
-          <ion-card-header class="block bg-gray-2500 text-gray-700 font-bold" for="endereco">
-            Endereço de pagamento:
+          <ion-card-header class="block font-bold" for="endereco">
+            <p class="text-gray-600">Endereço de pagamento:</p>
             <ion-card-subtitle>
-              <ion-input v-model="user.address_billing" :value="$store.state.user.address_billing"/>
+              <p>{{ $store.state.user.address_billing }}</p>
             </ion-card-subtitle>
           </ion-card-header>
 
         </ion-card>
 
-        <ion-card class="mb-1 bg-gray-200">
-          <ion-card-header class="block text-gray-700 font-bold mb-2" for="telefone">
-            Telefone:
+        <ion-card>
+          <ion-card-header class="block font-bold" for="telefone">
+            <p class="text-gray-600">Telefone:</p>
             <ion-card-subtitle>
-              <ion-input v-model="user.phone_number" :value="$store.state.user.phone_number"/>
-            </ion-card-subtitle>
+              <p>{{ $store.state.user.phone_number }}</p></ion-card-subtitle>
           </ion-card-header>
         </ion-card>
 
       </div>
     </div>
-    <IonFabContainer @click="updateProfile(user)"/>
+    <IonFabContainer @click="setOpen(true)"/>
+
+  <ion-modal :is-open="isOpen">
+    <ion-header>
+      <ion-toolbar>
+        <ion-buttons slot="end">
+          <ion-button @click="setOpen(false)">Close</ion-button>
+        </ion-buttons>
+      </ion-toolbar>
+    </ion-header>
+    <ion-card>
+      <ion-card-title class="items-center flex justify-center">
+        <h4 class="text-gray-500 font-semibold">Editar Perfil</h4>
+      </ion-card-title>
+      <ion-card-content>
+        <ion-input class="text-gray-500" :value="$store.state.user.name"
+                   placeholder="name" v-model="user.name"/>
+        <ion-input class="text-gray-500" :value="$store.state.user.email"
+                   placeholder="example@gmail.com" v-model="user.email"/>
+        <ion-input class="text-gray-500" :value="$store.state.user.address_delivery"
+                   placeholder="endereço de entrega" v-model="user.address_delivery"/>
+        <ion-input class="text-gray-500" :value="$store.state.user.address_billing"
+                   placeholder="endereço de pagamento" v-model="user.address_billing"/>
+        <ion-input class="text-gray-500" :value="$store.state.user.phone_number"
+                   placeholder="numero de telefone" v-model="user.phone_number"/>
+        <ion-button @click="updateProfile(user)" color="danger" expand="full" size="small">salvar</ion-button>
+      </ion-card-content>
+    </ion-card>
+
+  </ion-modal>
 </template>
 
 <script>
-import {IonCard, IonCardHeader, IonCardSubtitle, IonCardTitle,
-  IonInput, loadingController
+import {
+  IonCard, IonCardHeader, IonCardSubtitle, IonCardTitle,
+  IonInput, IonModal, loadingController, IonCardContent,IonHeader,
+  IonToolbar,IonButtons,IonButton
 } from "@ionic/vue";
 import { add } from 'ionicons/icons';
 import SettingsContainer from "@/components/authComponents/ProfileSettingsContainer/SettingsContainer.vue";
@@ -75,7 +104,23 @@ export default {
   name: "ProfileContainer.vue",
   components:{
     AddBalanceContainer,SettingsContainer,IonCard,IonCardHeader,
-    IonCardSubtitle,IonCardTitle,IonFabContainer,IonInput },
+    IonCardSubtitle,IonCardTitle,IonFabContainer,IonInput,IonModal,IonCardContent,
+    IonToolbar,IonButtons,IonButton,IonHeader },
+  data(){
+    return{
+      isOpen: false,
+      name: '',
+      email: '',
+      address_delivery: '',
+      address_billing: '',
+      phone_number: '',
+    }
+  },
+  methods:{
+    setOpen(isOpen) {
+      this.isOpen = isOpen;
+    },
+  },
   setup(){
 
     const user = ref({});
@@ -94,6 +139,7 @@ export default {
       postAPI('editProfile',user).then(response =>{
         console.log(response);
         showLoading();
+        this.isOpen = false;
       }).catch(error =>{
         console.log(error);
       });
@@ -129,6 +175,7 @@ export default {
         year: "numeric",
       });
     };
+
 
     return{
       formatPrice,

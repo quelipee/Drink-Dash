@@ -18,7 +18,10 @@
             <p class="text-green-600">
               {{formatPrice(bebida.price)}}
             </p>
-            <p>Estoque {{bebida.produtc_stock.available_quantity}}</p>
+            <div class="flex items-center justify-between space-x-2">
+              <p>Estoque</p>
+              <p class="px-1 bg-gray-200 rounded-md">{{bebida.produtc_stock.available_quantity}}</p>
+            </div>
           </ion-card-content>
         </div>
       </div>
