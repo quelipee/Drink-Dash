@@ -16,6 +16,7 @@
   import axios from "axios";
   import {IonRow, IonAlert, loadingController} from "@ionic/vue";
   import {useRouter} from "vue-router";
+import postAPILogin from '../../../services/postAPILogin';
 
   export default {
     name: "InputContainer.vue",
@@ -93,21 +94,15 @@
       ];
 
       const login = (email,password) => {
-        axios.post('http://127.0.0.1:8000/api/login',{
-          email: email,
-          password: password
-        }).then(response =>{
+        postAPILogin(email,password).then(() =>{
           showLoading();
-          const token = response.data.token.plainTextToken;
-          localStorage.setItem('token', token);
-          axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
           route.push({name:'tab1'})
         }).catch(error =>{
-          console.log(error);
-        })
+          console.log(error)
+        });
       };
 
-      return { alertInputs,alertButtons,route};
+      return { alertInputs,alertButtons,route,login};
     },
   }
 </script>

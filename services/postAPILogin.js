@@ -2,7 +2,7 @@ import axios from 'axios';
 
 const postAPILogin = (email, password) => {
     let token = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
-    return axios.post('http://192.168.1.114:8000/api/login',{
+    return axios.post('http://127.0.0.1:8000/api/login',{
         email:email,
         password:password,
         _token: token
