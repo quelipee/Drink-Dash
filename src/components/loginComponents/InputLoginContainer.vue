@@ -60,7 +60,7 @@ export default {
     }
 
     const getToken = async () =>{
-      await axios.get('http://192.168.1.114:8000/sanctum/csrf-cookie');
+      await axios.get('http://127.0.0.1:8000/sanctum/csrf-cookie');
     }
 
     const login = async () =>{

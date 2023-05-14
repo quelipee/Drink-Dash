@@ -7,7 +7,7 @@
         <div class="p-2 bg-cover bg-no-repeat bg-center bg-opacity-70"
              style="background-image: url('src/assets/img/wallpaper123.png');">
           <ion-img v-if="bebida.img_product.includes('punkapi')" :src="bebida.img_product" class="bg-cover bg-center h-24"/>
-          <ion-img v-else :src="'http://192.168.1.114:8000/storage/' + bebida.img_product" class="bg-cover bg-center h-24"/>
+          <ion-img v-else :src="'http://127.0.0.1:8000/storage/' + bebida.img_product" class="bg-cover bg-center h-24"/>
         </div>
         <div class="space-y-2 p-2">
           <ion-card-header class="p-1">

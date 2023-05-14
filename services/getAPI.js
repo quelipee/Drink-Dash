@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const getAPI = (data) => {
-    return axios.get('http://192.168.1.114:8000/api/' + data,{
+    return axios.get('http://127.0.0.1:8000/api/' + data,{
         headers: {
             Authorization: 'Bearer ' +  localStorage.getItem('token')
         }

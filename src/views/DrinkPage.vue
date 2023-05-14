@@ -8,7 +8,7 @@
     <ion-content>
       <div v-if="loading">
         <ImgContainer v-if="bebida.img_product.includes('punkapi')" :variant="bebida.img_product ? bebida.img_product : 'default'"/>
-        <ImgContainer v-else :variant="bebida.img_product ? 'http://192.168.1.114:8000/storage/' + bebida.img_product : 'default'"/>
+        <ImgContainer v-else :variant="bebida.img_product ? 'http://127.0.0.1:8000/storage/' + bebida.img_product : 'default'"/>
         <ProductContainer :variant="bebida"/>
       </div>
     </ion-content>
