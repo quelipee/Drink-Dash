@@ -38,7 +38,7 @@ import postAPILogin from '../../../services/postAPILogin';
           {
             text: 'Registrar',
             handler: (data) => {
-              axios.post('http://127.0.0.1:8000/api/register',{
+              axios.post('http://192.168.1.114:8000/api/register',{
                 name: data['name'],
                 email: data['email'],
                 password: data['password'],
